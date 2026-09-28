@@ -266,12 +266,17 @@ function renderChart(container) {
     tooltip.classList.remove("visible");
   }
 
-  hitArea.addEventListener("pointermove", event => {
+  const showAtPointer = event => {
     const bounds = svg.getBoundingClientRect();
     const ratio = (event.clientX - bounds.left - MARGIN.left) / plotWidth;
     show(Math.max(0, Math.min(MONTHLY_REVENUE.length - 1, Math.round(ratio * (MONTHLY_REVENUE.length - 1)))));
+  };
+  hitArea.addEventListener("pointermove", showAtPointer);
+  hitArea.addEventListener("pointerdown", showAtPointer);
+  // On touch, keep the tooltip after the finger lifts; tapping elsewhere blurs the chart and hides it.
+  hitArea.addEventListener("pointerleave", event => {
+    if (event.pointerType === "mouse") hide();
   });
-  hitArea.addEventListener("pointerleave", hide);
 
   svg.addEventListener("keydown", event => {
     if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
