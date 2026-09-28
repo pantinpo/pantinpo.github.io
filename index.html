@@ -54,7 +54,7 @@
           <dd data-count="6">6</dd>
         </div>
         <div class="stat" data-reveal style="--delay: 480ms">
-          <dt>FTEs in Real-time Capacity Analytics</dt>
+          <dt>FTEs in capacity planning</dt>
           <dd data-count="1000">1,000</dd>
         </div>
         <div class="stat" data-reveal style="--delay: 560ms">
@@ -283,7 +283,7 @@
 
         <div class="project-links">
           <!-- TODO: replace LOOKER_STUDIO_URL with the share link -->
-          <a href="https://datastudio.google.com/s/hpoM13OvEf8" class="button" target="_blank" rel="noopener">Open Looker Studio dashboard</a>
+          <a href="LOOKER_STUDIO_URL" class="button" target="_blank" rel="noopener">Open Looker Studio dashboard</a>
           <a href="dashboard.html" class="button button-secondary">Vibe-coded version with insights</a>
           <a href="https://github.com/pantinpo/BI_Portfolio" class="button button-secondary" target="_blank" rel="noopener">View code on GitHub</a>
         </div>
@@ -292,78 +292,101 @@
 
     <section class="section container" id="experience">
       <p class="eyebrow" data-reveal>Experience</p>
-      <h2 data-reveal>Where I've worked</h2>
+      <div class="timeline-head" data-reveal>
+        <div>
+          <h2>Where I've worked</h2>
+          <p class="timeline-hint">From today back to 2009. Drag, swipe or use the arrows.</p>
+        </div>
+        <div class="timeline-controls">
+          <span class="timeline-count" id="timeline-count">01 / 07</span>
+          <button class="timeline-arrow" id="timeline-prev" type="button" aria-label="Previous role">←</button>
+          <button class="timeline-arrow" id="timeline-next" type="button" aria-label="Next role">→</button>
+        </div>
+      </div>
 
-      <ol class="timeline" id="timeline">
+      <ol class="timeline" id="timeline" tabindex="0" aria-label="Career timeline, newest to oldest">
         <li data-reveal>
-          <div class="role-header">
-            <h3>Team Lead, Global Data Analytics</h3>
+          <article class="card role-card">
+            <p class="role-year" aria-hidden="true">2025</p>
             <span class="dates">Aug 2025 – Present</span>
-          </div>
-          <p class="company">Accenture</p>
-          <ul>
-            <li>Lead a global analytics team delivering reporting and BI for regional business units.</li>
-            <li>Turn business questions into KPIs and Power BI dashboards with product, operations and engineering leads.</li>
-            <li>Set up data governance standards and QA checks for multi-region reporting.</li>
-            <li>Founded and led the department's AI enablement program for 100+ operations staff.</li>
-          </ul>
+            <h3>Team Lead, Global Data Analytics</h3>
+            <p class="company">Accenture</p>
+            <ul>
+              <li>Lead a global analytics team delivering reporting and BI for regional business units.</li>
+              <li>Turn business questions into KPIs and Power BI dashboards with product, operations and engineering leads.</li>
+              <li>Set up data governance standards and QA checks for multi-region reporting.</li>
+              <li>Founded and led the department's AI enablement program for 100+ operations staff.</li>
+            </ul>
+          </article>
         </li>
         <li data-reveal>
-          <div class="role-header">
-            <h3>Assistant Manager, Global Workforce Optimization</h3>
+          <article class="card role-card">
+            <p class="role-year" aria-hidden="true">2022</p>
             <span class="dates">Nov 2022 – Jun 2025</span>
-          </div>
-          <p class="company">Citibank N.A. – ROHQ</p>
-          <ul>
-            <li>Ran capacity planning and resource allocation for up to 1,000 FTEs in Manila shared services.</li>
-            <li>Managed and coached a team of 4 data analysts.</li>
-            <li>Built automated Excel dashboards for SLA adherence, capacity utilization and staffing.</li>
-          </ul>
+            <h3>Assistant Manager, Global Workforce Optimization</h3>
+            <p class="company">Citibank N.A. – ROHQ</p>
+            <ul>
+              <li>Ran capacity planning and resource allocation for up to 1,000 FTEs in Manila shared services.</li>
+              <li>Managed and coached a team of 4 data analysts.</li>
+              <li>Built automated Excel dashboards for SLA adherence, capacity utilization and staffing.</li>
+            </ul>
+          </article>
         </li>
         <li data-reveal>
-          <div class="role-header">
-            <h3>Workforce Analyst, Central Reporting</h3>
+          <article class="card role-card">
+            <p class="role-year" aria-hidden="true">2022</p>
             <span class="dates">May 2022 – Nov 2022</span>
-          </div>
-          <p class="company">Optum Global Solutions</p>
-          <ul>
-            <li>Handled vendor invoicing and financial tracking for sites in the Philippines, India and Puerto Rico.</li>
-            <li>Automated overtime billing and executive dashboards with VBA, speeding up monthly reconciliation.</li>
-          </ul>
+            <h3>Workforce Analyst, Central Reporting</h3>
+            <p class="company">Optum Global Solutions</p>
+            <ul>
+              <li>Handled vendor invoicing and financial tracking for sites in the Philippines, India and Puerto Rico.</li>
+              <li>Automated overtime billing and executive dashboards with VBA, speeding up monthly reconciliation.</li>
+            </ul>
+          </article>
         </li>
         <li data-reveal>
-          <div class="role-header">
-            <h3>System Front-End Administrator</h3>
+          <article class="card role-card">
+            <p class="role-year" aria-hidden="true">2019</p>
             <span class="dates">Jan 2019 – May 2022</span>
-          </div>
-          <p class="company">Optum Global Solutions</p>
-          <ul>
-            <li>Administered web-based WFM platforms and worked with developers on upgrades and security.</li>
-            <li>Built BI dashboards for regional site leadership.</li>
-          </ul>
+            <h3>System Front-End Administrator</h3>
+            <p class="company">Optum Global Solutions</p>
+            <ul>
+              <li>Administered web-based WFM platforms and worked with developers on upgrades and security.</li>
+              <li>Built BI dashboards for regional site leadership.</li>
+            </ul>
+          </article>
         </li>
         <li data-reveal>
-          <div class="role-header">
-            <h3>Reporting Analyst, Quality Team</h3>
+          <article class="card role-card">
+            <p class="role-year" aria-hidden="true">2018</p>
             <span class="dates">May 2018 – Jan 2019</span>
-          </div>
-          <p class="company">Optum Global Solutions</p>
-          <ul>
-            <li>Provided central reporting and analytics support for people managers.</li>
-          </ul>
+            <h3>Reporting Analyst, Quality Team</h3>
+            <p class="company">Optum Global Solutions</p>
+            <ul>
+              <li>Provided central reporting and analytics support for people managers.</li>
+            </ul>
+          </article>
         </li>
         <li data-reveal>
-          <div class="role-header">
-            <h3>Customer service, support & operations</h3>
+          <article class="card role-card">
+            <p class="role-year" aria-hidden="true">2012</p>
             <span class="dates">2012 – 2018</span>
-          </div>
-          <p class="company">Optum · JPMorgan Chase · Convergys · Sutherland</p>
+            <h3>Customer service, support & operations</h3>
+            <p class="company">Optum · JPMorgan Chase · Convergys · Sutherland</p>
+            <ul>
+              <li>Started as a customer service representative, then moved through support and operations roles.</li>
+            </ul>
+          </article>
+        </li>
+        <li data-reveal>
+          <article class="card role-card">
+            <p class="role-year" aria-hidden="true">2009</p>
+            <span class="dates">2009 – 2012</span>
+            <h3>BS Accounting Technology (undergraduate)</h3>
+            <p class="company">University of the East Caloocan</p>
+          </article>
         </li>
       </ol>
-
-      <p class="education" data-reveal>
-        <strong>Education</strong> · BS Accounting Technology (undergraduate), University of the East Caloocan, 2009 – 2012
-      </p>
     </section>
 
     <section class="section container" id="about">

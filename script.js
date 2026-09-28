@@ -43,15 +43,13 @@ if (!reduceMotion) {
   });
 }
 
-// Scroll-driven UI: header, progress bar, active nav link, timeline
+// Scroll-driven UI: header, progress bar, active nav link
 
 const header = document.getElementById("header");
 const nav = document.getElementById("nav");
 const navLinks = [...nav.querySelectorAll("a")];
 const indicator = nav.querySelector(".nav-indicator");
 const sections = navLinks.map(link => document.querySelector(link.getAttribute("href")));
-const timeline = document.getElementById("timeline");
-const timelineItems = [...timeline.querySelectorAll(":scope > li")];
 const root = document.documentElement;
 
 function moveIndicator(link) {
@@ -79,12 +77,6 @@ function onScroll() {
   if (scrollY >= maxScroll - 2) activeIndex = sections.length - 1;
   navLinks.forEach((link, i) => link.classList.toggle("active", i === activeIndex));
   moveIndicator(navLinks[activeIndex]);
-
-  const anchor = window.innerHeight * 0.6;
-  const bounds = timeline.getBoundingClientRect();
-  const filled = Math.max(0, Math.min(1, (anchor - bounds.top) / bounds.height));
-  timeline.style.setProperty("--timeline", filled);
-  timelineItems.forEach(item => item.classList.toggle("reached", item.getBoundingClientRect().top + 8 < anchor));
 }
 
 let scrollQueued = false;
@@ -118,6 +110,89 @@ document.querySelectorAll(".flip").forEach(card => {
   card.addEventListener("click", () => {
     card.setAttribute("aria-pressed", card.getAttribute("aria-pressed") !== "true");
   });
+});
+
+// Experience timeline: side-scrolls with drag, swipe, arrows or keyboard
+
+const timeline = document.getElementById("timeline");
+const timelineItems = [...timeline.children];
+const timelinePrev = document.getElementById("timeline-prev");
+const timelineNext = document.getElementById("timeline-next");
+const timelineCount = document.getElementById("timeline-count");
+const pad = n => String(n).padStart(2, "0");
+
+// Each card's distance from where the first card rests.
+function cardOffsets() {
+  const start = timeline.getBoundingClientRect().left + parseFloat(getComputedStyle(timeline).paddingLeft);
+  return timelineItems.map(item => item.getBoundingClientRect().left - start);
+}
+
+function updateTimeline() {
+  const offsets = cardOffsets();
+  const atStart = timeline.scrollLeft <= 2;
+  const atEnd = timeline.scrollLeft >= timeline.scrollWidth - timeline.clientWidth - 2;
+  let current = offsets.reduce((best, offset, i) => (Math.abs(offset) < Math.abs(offsets[best]) ? i : best), 0);
+  if (atEnd) current = timelineItems.length - 1;
+
+  timelineItems.forEach((item, i) => {
+    item.classList.toggle("current", i === current);
+    item.classList.toggle("reached", item.getBoundingClientRect().left < window.innerWidth * 0.8);
+  });
+  timelineCount.textContent = `${pad(current + 1)} / ${pad(timelineItems.length)}`;
+  timelinePrev.disabled = atStart;
+  timelineNext.disabled = atEnd;
+}
+
+function stepTimeline(direction) {
+  const offsets = cardOffsets();
+  const target = direction > 0 ? offsets.findIndex(o => o > 2) : offsets.findLastIndex(o => o < -2);
+  if (target === -1) return;
+  timeline.scrollBy({ left: offsets[target], behavior: reduceMotion ? "auto" : "smooth" });
+}
+
+timelinePrev.addEventListener("click", () => stepTimeline(-1));
+timelineNext.addEventListener("click", () => stepTimeline(1));
+
+let timelineQueued = false;
+timeline.addEventListener("scroll", () => {
+  if (timelineQueued) return;
+  timelineQueued = true;
+  requestAnimationFrame(() => {
+    updateTimeline();
+    timelineQueued = false;
+  });
+}, { passive: true });
+window.addEventListener("resize", updateTimeline);
+updateTimeline();
+
+// Mouse drag. Touch and trackpads already scroll sideways natively.
+let drag = null;
+
+timeline.addEventListener("pointerdown", event => {
+  if (event.pointerType !== "mouse" || event.button !== 0) return;
+  drag = { x: event.clientX, left: timeline.scrollLeft, moved: false };
+});
+
+window.addEventListener("pointermove", event => {
+  if (!drag) return;
+  const dx = event.clientX - drag.x;
+  if (!drag.moved && Math.abs(dx) > 4) {
+    drag.moved = true;
+    timeline.classList.add("dragging");
+    window.getSelection().removeAllRanges();
+  }
+  if (drag.moved) timeline.scrollLeft = drag.left - dx;
+});
+
+window.addEventListener("pointerup", () => {
+  if (!drag) return;
+  if (drag.moved) {
+    timeline.classList.remove("dragging");
+    const offsets = cardOffsets();
+    const nearest = offsets.reduce((best, o) => (Math.abs(o) < Math.abs(best) ? o : best), Infinity);
+    timeline.scrollBy({ left: nearest, behavior: reduceMotion ? "auto" : "smooth" });
+  }
+  drag = null;
 });
 
 // Cursor-following highlight on cards
