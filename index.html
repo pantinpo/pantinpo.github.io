@@ -33,23 +33,32 @@
 
   <main id="top">
     <section class="hero container">
-      <div class="hero-grid">
-        <div>
-          <p class="eyebrow" data-reveal>Business Intelligence & Workforce Analytics · Manila</p>
-          <h1 data-reveal style="--delay: 80ms">Jastin Tucay</h1>
-          <p class="lead" data-reveal style="--delay: 160ms">
+      <div class="bento">
+        <div class="tile tile-intro card" data-reveal>
+          <div class="intro-top">
+            <span class="photo">
+              <span class="photo-fallback" aria-hidden="true">JT</span>
+              <img src="photo.jpg" alt="Jastin Tucay" onerror="this.remove()">
+            </span>
+            <p class="eyebrow">Business Intelligence & Workforce Analytics · Manila</p>
+          </div>
+          <h1>Jastin Tucay</h1>
+          <p class="lead">
             I build the reports, dashboards and automations that operations teams run on, and teach
             teams to use AI well. Currently leading a global data analytics team at Accenture.
           </p>
-          <div class="hero-actions" data-reveal style="--delay: 240ms">
+          <div class="hero-actions">
             <a href="#projects" class="button">See my work</a>
             <a href="Jastin-Tucay-CV.pdf" class="button button-secondary" download>Download CV</a>
           </div>
         </div>
 
-        <aside class="ask card" data-reveal style="--delay: 320ms" aria-labelledby="ask-title">
+        <aside class="tile tile-ask ask card" data-reveal style="--delay: 80ms" aria-labelledby="ask-title">
           <div class="ask-head">
-            <span class="ask-avatar" aria-hidden="true">J</span>
+            <span class="ask-avatar" aria-hidden="true">
+              J
+              <img src="photo.jpg" alt="" onerror="this.remove()">
+            </span>
             <div>
               <p class="ask-title" id="ask-title">Ask about Jas</p>
               <p class="ask-subtitle">Pick a question below</p>
@@ -62,33 +71,48 @@
           <div class="ask-chips" id="ask-chips"></div>
           <p class="sr-only" id="ask-status" aria-live="polite"></p>
         </aside>
-      </div>
 
-      <dl class="stats">
-        <div class="stat" data-reveal style="--delay: 320ms">
-          <dt>Years in reporting & analytics</dt>
-          <dd data-count="8" data-suffix="+">8+</dd>
+        <div class="tile tile-stat tile-years card" data-reveal style="--delay: 160ms">
+          <p class="tile-label">Years in reporting & analytics</p>
+          <p class="tile-value" data-count="8" data-suffix="+">8+</p>
+          <p class="tile-note">After 6 years in frontline operations</p>
         </div>
-        <div class="stat" data-reveal style="--delay: 400ms">
-          <dt>Years in frontline operations</dt>
-          <dd data-count="6">6</dd>
+
+        <a href="#projects" class="tile tile-chart card" data-reveal style="--delay: 240ms">
+          <p class="tile-label">E-commerce dashboard · net revenue</p>
+          <p class="tile-value" id="spark-value">$182K</p>
+          <p class="tile-note" id="spark-note">Aug 2026</p>
+          <svg class="spark" id="spark" viewBox="0 0 300 80" preserveAspectRatio="none" aria-hidden="true"></svg>
+        </a>
+
+        <div class="tile tile-stat tile-ftes card" data-reveal style="--delay: 320ms">
+          <p class="tile-label">FTEs in capacity planning</p>
+          <p class="tile-value" data-count="1000">1,000</p>
+          <p class="tile-note">Manila shared services, Citi</p>
         </div>
-        <div class="stat" data-reveal style="--delay: 480ms">
-          <dt>FTEs in capacity planning</dt>
-          <dd data-count="1000">1,000</dd>
+
+        <div class="tile tile-stat tile-ai card" data-reveal style="--delay: 400ms">
+          <p class="tile-label">Staff trained to use AI</p>
+          <p class="tile-value" data-count="100" data-suffix="+">100+</p>
+          <p class="tile-note">Daily adoption 83% → 96%</p>
         </div>
-        <div class="stat" data-reveal style="--delay: 560ms">
-          <dt>Staff trained to use AI</dt>
-          <dd data-count="100" data-suffix="+">100+</dd>
+
+        <div class="tile tile-book card" data-reveal style="--delay: 480ms">
+          <p class="status"><span class="status-dot" aria-hidden="true"></span>Open to data & analytics roles</p>
+          <p class="book-title">Have a team that runs on data? Let's talk.</p>
+          <div class="book-row">
+            <a href="https://calendar.app.google/HZJe4pwAjYoRgdL48" class="button button-light" target="_blank" rel="noopener">Book a 30-min call</a>
+            <span class="local-time" id="local-time">Manila</span>
+          </div>
         </div>
-      </dl>
+      </div>
     </section>
 
     <section class="section container" id="skills">
       <p class="eyebrow" data-reveal>Skills</p>
       <h2 data-reveal>What I work with</h2>
       <div class="skill-grid">
-        <div class="skill-card card" data-reveal>
+        <div class="skill-card skill-wide card" data-reveal>
           <svg class="skill-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20v-8M12 20V5M19 20v-11"/></svg>
           <h3>Data & BI</h3>
           <ul class="tags">
@@ -112,7 +136,7 @@
             <li>Vendor performance</li><li>Vendor billing & invoicing</li><li>Data governance & QA</li>
           </ul>
         </div>
-        <div class="skill-card card" data-reveal style="--delay: 240ms">
+        <div class="skill-card skill-wide card" data-reveal style="--delay: 240ms">
           <svg class="skill-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 21V4M5 4h11l-2 4 2 4H5"/></svg>
           <h3>Leadership</h3>
           <ul class="tags">

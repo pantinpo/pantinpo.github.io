@@ -525,3 +525,37 @@ if (!chartDrawn) {
   }, { threshold: 0.5 });
   chartObserver.observe(chart);
 }
+
+// Hero tiles: revenue sparkline and Manila local time
+
+function renderSpark() {
+  const svg = document.getElementById("spark");
+  const values = MONTHLY_REVENUE.map(([, value]) => value);
+  const max = Math.max(...values);
+  const points = values.map((value, i) => [(i / (values.length - 1)) * 300, 76 - (value / max) * 60]);
+  const line = points.map(([px, py], i) => (i ? "L" : "M") + px.toFixed(1) + "," + py.toFixed(1)).join("");
+  el("path", { d: line + "L300,80L0,80Z", fill: "var(--series-1)", "fill-opacity": 0.12 }, svg);
+  el("path", {
+    d: line, fill: "none", stroke: "var(--series-1)", "stroke-width": 2,
+    "vector-effect": "non-scaling-stroke", "stroke-linejoin": "round",
+  }, svg);
+
+  const [lastKey, lastValue] = MONTHLY_REVENUE[MONTHLY_REVENUE.length - 1];
+  const yearAgo = MONTHLY_REVENUE.find(([key]) => key === `${Number(lastKey.slice(0, 4)) - 1}${lastKey.slice(4)}`);
+  document.getElementById("spark-value").textContent = compactCurrency(lastValue);
+  document.getElementById("spark-note").textContent = yearAgo
+    ? `${monthName(lastKey)} · ${lastValue >= yearAgo[1] ? "+" : "−"}${Math.round(Math.abs(lastValue / yearAgo[1] - 1) * 100)}% vs last year`
+    : monthName(lastKey);
+}
+
+renderSpark();
+
+const localTime = document.getElementById("local-time");
+const manilaClock = new Intl.DateTimeFormat("en-US", { timeZone: "Asia/Manila", hour: "numeric", minute: "2-digit" });
+
+function updateLocalTime() {
+  localTime.textContent = `${manilaClock.format(new Date())} in Manila`;
+}
+
+updateLocalTime();
+setInterval(updateLocalTime, 30000);
