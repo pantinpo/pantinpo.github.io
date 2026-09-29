@@ -285,6 +285,17 @@ h1, h2, h3, h4 {
   padding-bottom: 32px;
 }
 
+.hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 400px);
+  gap: 48px;
+  align-items: center;
+}
+
+.hero-grid h1 {
+  font-size: clamp(44px, 6vw, 68px);
+}
+
 .eyebrow {
   margin: 0 0 14px;
   font-size: 13px;
@@ -340,6 +351,207 @@ h1 {
   font-size: 36px;
   font-weight: 600;
   letter-spacing: -0.02em;
+}
+
+/* Ask about Jas */
+
+.ask {
+  display: none;
+  flex-direction: column;
+  box-shadow: var(--shadow);
+}
+
+.js .ask {
+  display: flex;
+}
+
+.ask-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border);
+}
+
+.ask-avatar {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.ask-title,
+.ask-subtitle {
+  margin: 0;
+  line-height: 1.3;
+}
+
+.ask-title {
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.ask-subtitle {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.ask-reset {
+  margin-left: auto;
+  padding: 4px 10px;
+  border: 0;
+  border-radius: 8px;
+  background: none;
+  font: inherit;
+  font-size: 13px;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+
+.ask-reset:hover {
+  color: var(--text-primary);
+  background: var(--accent-soft);
+}
+
+.ask-log {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  height: 280px;
+  padding: 18px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+}
+
+.bubble {
+  max-width: 90%;
+  padding: 10px 14px;
+  border-radius: 14px;
+  font-size: 14px;
+  line-height: 1.55;
+  animation: bubble-in 0.35s var(--ease);
+}
+
+.bubble p {
+  margin: 0;
+}
+
+.bubble p + p {
+  margin-top: 8px;
+}
+
+.bubble-bot {
+  align-self: flex-start;
+  border: 1px solid var(--border);
+  border-bottom-left-radius: 4px;
+  background: var(--surface);
+}
+
+.bubble-bot a {
+  font-weight: 500;
+}
+
+.bubble-user {
+  align-self: flex-end;
+  border-bottom-right-radius: 4px;
+  background: var(--accent);
+  color: #ffffff;
+}
+
+.bubble.typing {
+  display: flex;
+  gap: 4px;
+  padding: 14px 16px;
+}
+
+.typing span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--text-muted);
+  animation: typing 1s infinite;
+}
+
+.typing span:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.typing span:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+@keyframes bubble-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+@keyframes typing {
+  0%, 60%, 100% {
+    opacity: 0.3;
+    transform: none;
+  }
+  30% {
+    opacity: 1;
+    transform: translateY(-3px);
+  }
+}
+
+.ask-chips {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 14px 18px 18px;
+  border-top: 1px solid var(--border);
+}
+
+.chip {
+  padding: 9px 14px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface-raised);
+  font: inherit;
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--text-primary);
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s, color 0.2s;
+}
+
+.chip:hover:not([aria-disabled="true"]) {
+  border-color: var(--series-1);
+  background: var(--accent-soft);
+}
+
+.chip[aria-disabled="true"] {
+  color: var(--text-muted);
+  cursor: default;
+}
+
+.chip[aria-disabled="true"]::before {
+  content: "✓ ";
+}
+
+.ask-chips.busy .chip {
+  cursor: progress;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
 /* Sections */
@@ -920,6 +1132,16 @@ h4 {
 
 /* Responsive */
 
+@media (max-width: 960px) {
+  .hero-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .hero-grid h1 {
+    font-size: clamp(44px, 8vw, 76px);
+  }
+}
+
 @media (max-width: 900px) {
   .stats {
     grid-template-columns: repeat(2, 1fr);
@@ -1028,6 +1250,11 @@ h4 {
   .button,
   .role-card {
     transition: none;
+  }
+
+  .bubble,
+  .typing span {
+    animation: none;
   }
 
   body::before {

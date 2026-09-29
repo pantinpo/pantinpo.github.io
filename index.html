@@ -33,15 +33,35 @@
 
   <main id="top">
     <section class="hero container">
-      <p class="eyebrow" data-reveal>Business Intelligence & Workforce Analytics · Manila</p>
-      <h1 data-reveal style="--delay: 80ms">Jastin Tucay</h1>
-      <p class="lead" data-reveal style="--delay: 160ms">
-        I build the reports, dashboards and automations that operations teams run on, and teach
-        teams to use AI well. Currently leading a global data analytics team at Accenture.
-      </p>
-      <div class="hero-actions" data-reveal style="--delay: 240ms">
-        <a href="#projects" class="button">See my work</a>
-        <a href="Jastin-Tucay-CV.pdf" class="button button-secondary" download>Download CV</a>
+      <div class="hero-grid">
+        <div>
+          <p class="eyebrow" data-reveal>Business Intelligence & Workforce Analytics · Manila</p>
+          <h1 data-reveal style="--delay: 80ms">Jastin Tucay</h1>
+          <p class="lead" data-reveal style="--delay: 160ms">
+            I build the reports, dashboards and automations that operations teams run on, and teach
+            teams to use AI well. Currently leading a global data analytics team at Accenture.
+          </p>
+          <div class="hero-actions" data-reveal style="--delay: 240ms">
+            <a href="#projects" class="button">See my work</a>
+            <a href="Jastin-Tucay-CV.pdf" class="button button-secondary" download>Download CV</a>
+          </div>
+        </div>
+
+        <aside class="ask card" data-reveal style="--delay: 320ms" aria-labelledby="ask-title">
+          <div class="ask-head">
+            <span class="ask-avatar" aria-hidden="true">J</span>
+            <div>
+              <p class="ask-title" id="ask-title">Ask about Jas</p>
+              <p class="ask-subtitle">Pick a question below</p>
+            </div>
+            <button class="ask-reset" id="ask-reset" type="button" hidden>Start over</button>
+          </div>
+          <div class="ask-log" id="ask-log">
+            <div class="bubble bubble-bot"><p>Hi! I answer quick questions about Jas's experience. Pick one below.</p></div>
+          </div>
+          <div class="ask-chips" id="ask-chips"></div>
+          <p class="sr-only" id="ask-status" aria-live="polite"></p>
+        </aside>
       </div>
 
       <dl class="stats">
@@ -54,8 +74,8 @@
           <dd data-count="6">6</dd>
         </div>
         <div class="stat" data-reveal style="--delay: 480ms">
-          <dt>FTEs in Real-time Capacity Analytics</dt>
-          <dd data-count="1000">1,000+</dd>
+          <dt>FTEs in capacity planning</dt>
+          <dd data-count="1000">1,000</dd>
         </div>
         <div class="stat" data-reveal style="--delay: 560ms">
           <dt>Staff trained to use AI</dt>
@@ -411,9 +431,10 @@
       <div class="contact-card card" data-reveal>
         <p class="eyebrow">Contact</p>
         <h2>Let's talk</h2>
-        <p class="section-intro">Email or LinkedIn is the best way to reach me.</p>
+        <p class="section-intro">Book a 30-minute call on a weekday, or reach me by email or LinkedIn.</p>
         <div class="hero-actions">
-          <a href="mailto:jastintucay@gmail.com" class="button">jastintucay@gmail.com</a>
+          <a href="https://calendar.app.google/HZJe4pwAjYoRgdL48" class="button" id="book-call" target="_blank" rel="noopener">Book a 30-min call</a>
+          <a href="mailto:jastintucay@gmail.com" class="button button-secondary">jastintucay@gmail.com</a>
           <a href="https://www.linkedin.com/in/jastintucay" class="button button-secondary" target="_blank" rel="noopener">LinkedIn</a>
         </div>
       </div>

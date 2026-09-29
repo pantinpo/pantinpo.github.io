@@ -112,6 +112,139 @@ document.querySelectorAll(".flip").forEach(card => {
   });
 });
 
+// Ask about Jas: pre-written answers, typed out like a chat
+
+const ASK = [
+  {
+    q: "How does Jas fit a Data & Analytics role?",
+    a: [
+      "Jas has 8+ years in reporting and analytics, after 6 years on the operations floor, so he builds reports for the people who actually use them.",
+      "He now leads a global data analytics team at Accenture, turning business questions into KPIs and Power BI dashboards and setting the governance and QA standards for multi-region reporting. One recent build put 20+ vendor sites into a single source of truth and lifted data accuracy from 83% to 99% in 4 weeks.",
+      "Before that he ran capacity planning for up to 1,000 FTEs at Citi and coached a team of 4 analysts.",
+    ],
+    link: { href: "#projects", label: "See the projects" },
+  },
+  {
+    q: "Does Jas know SQL and Python, and what does he use them for?",
+    a: [
+      "Yes. His e-commerce dashboard project uses both, end to end. SQL pulls the data from a six-table source database and uses a window function to flag each customer's first order.",
+      "Python (pandas) then cleans it, fixing 8 types of data issues across 45,736 orders and validating the output before it reaches Looker Studio.",
+      "At work he also builds with Google Apps Script, VBA, Excel and Power BI.",
+    ],
+    link: { href: "https://github.com/pantinpo/BI_Portfolio", label: "See the code on GitHub" },
+  },
+  {
+    q: "What has Jas automated?",
+    a: [
+      "At Accenture: reporting pipelines in Google Apps Script for 20+ vendor sites, with automated cleaning, multi-week consolidation and anomaly detection, kept human-in-the-loop. Routine reporting setup time dropped 30%.",
+      "Earlier: overtime billing and executive dashboards in VBA at Optum, and Excel dashboards for SLA adherence, capacity and staffing at Citi.",
+    ],
+  },
+  {
+    q: "How does Jas use AI at work?",
+    a: [
+      "He founded and led Work Faster & Smarter, a program that trained 100+ operations staff, from entry-level analysts to leadership, to use AI within strict governance rules.",
+      "Daily AI adoption went from 83% to 96%+ in 8 weeks, each person saved about 4 hours a week, and 1,000+ AI-generated outputs went out with zero policy violations.",
+    ],
+  },
+];
+
+const askLog = document.getElementById("ask-log");
+const askChips = document.getElementById("ask-chips");
+const askReset = document.getElementById("ask-reset");
+const askStatus = document.getElementById("ask-status");
+const askGreeting = askLog.innerHTML;
+const bookingUrl = document.getElementById("book-call").href;
+const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
+let answering = false;
+
+function addBubble(from) {
+  const bubble = document.createElement("div");
+  bubble.className = `bubble bubble-${from}`;
+  askLog.appendChild(bubble);
+  askLog.scrollTop = askLog.scrollHeight;
+  return bubble;
+}
+
+async function typeParagraph(bubble, text) {
+  const p = document.createElement("p");
+  bubble.appendChild(p);
+  if (reduceMotion) {
+    p.textContent = text;
+    return;
+  }
+  const words = text.split(" ");
+  for (let i = 1; i <= words.length; i++) {
+    p.textContent = words.slice(0, i).join(" ");
+    askLog.scrollTop = askLog.scrollHeight;
+    await wait(22);
+  }
+}
+
+async function reply(paragraphs, link) {
+  const bubble = addBubble("bot");
+  bubble.classList.add("typing");
+  bubble.innerHTML = "<span></span><span></span><span></span>";
+  await wait(reduceMotion ? 0 : 700);
+  bubble.classList.remove("typing");
+  bubble.innerHTML = "";
+
+  askStatus.textContent = paragraphs.join(" ");
+  for (const text of paragraphs) await typeParagraph(bubble, text);
+
+  if (link) {
+    const a = document.createElement("a");
+    a.href = link.href;
+    a.textContent = link.label + " →";
+    if (link.href.startsWith("http")) {
+      a.target = "_blank";
+      a.rel = "noopener";
+    }
+    bubble.appendChild(document.createElement("p")).appendChild(a);
+    askLog.scrollTop = askLog.scrollHeight;
+  }
+}
+
+async function ask(item, chip) {
+  if (answering || chip.getAttribute("aria-disabled")) return;
+  answering = true;
+  askChips.classList.add("busy");
+  chip.setAttribute("aria-disabled", "true");
+  askReset.hidden = false;
+
+  addBubble("user").textContent = item.q;
+  await reply(item.a, item.link);
+  if (!askChips.querySelector('.chip:not([aria-disabled="true"])')) {
+    await reply(["That's everything I can answer here. The quickest way to learn more is a short call with Jas."],
+      { href: bookingUrl, label: "Book a 30-min call" });
+  }
+
+  answering = false;
+  askChips.classList.remove("busy");
+}
+
+function resetAsk() {
+  askLog.innerHTML = askGreeting;
+  askStatus.textContent = "";
+  askReset.hidden = true;
+  askChips.innerHTML = "";
+  for (const item of ASK) {
+    const chip = document.createElement("button");
+    chip.type = "button";
+    chip.className = "chip";
+    chip.textContent = item.q;
+    chip.addEventListener("click", () => ask(item, chip));
+    askChips.appendChild(chip);
+  }
+}
+
+askReset.addEventListener("click", () => {
+  if (answering) return;
+  resetAsk();
+  askChips.firstChild.focus();
+});
+resetAsk();
+
 // Experience timeline: side-scrolls with drag, swipe, arrows or keyboard
 
 const timeline = document.getElementById("timeline");
