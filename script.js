@@ -116,13 +116,21 @@ document.querySelectorAll(".flip").forEach(card => {
 
 const ASK = [
   {
-    q: "How does Jas fit a Data & Analytics role?",
+    q: "How does Jas fit an Analytics or BI Manager role?",
     a: [
-      "Jas has 8+ years in reporting and analytics, after 6 years on the operations floor, so he builds reports for the people who actually use them.",
-      "He now leads a global data analytics team at Accenture, turning business questions into KPIs and Power BI dashboards and setting the governance and QA standards for multi-region reporting. One recent build put 20+ vendor sites into a single source of truth and lifted data accuracy from 83% to 99% in 4 weeks.",
-      "Before that he ran capacity planning for up to 1,000 FTEs at Citi and coached a team of 4 analysts.",
+      "Jas leads a global data analytics team at Accenture, fully remote. He turns business questions into KPIs and Power BI dashboards with product, operations and engineering leads, and sets the governance and QA standards for multi-region reporting.",
+      "His team's results: 20+ vendor sites in a single source of truth, data accuracy lifted from 83% to 99% in 4 weeks, and 100% on-time reporting.",
+      "Before that he ran capacity planning for 1,000+ FTEs at Citi and coached a team of 4 analysts. With 8+ years in analytics after 6 on the operations floor, he builds reporting for the people who actually use it.",
     ],
     link: { href: "#projects", label: "See the projects" },
+  },
+  {
+    q: "Can Jas work remotely in my time zone?",
+    a: [
+      "Yes. Jas works fully remote today, leading a global team from Manila, and is available for US and Australia / NZ hours.",
+      "Working across regions is how he has spent his career: multi-region reporting at Accenture, global workforce optimization at Citi, and vendor sites in the Philippines, India and Puerto Rico at Optum.",
+    ],
+    link: { href: document.getElementById("book-call").href, label: "Book a 30-min call" },
   },
   {
     q: "Does Jas know SQL and Python, and what does he use them for?",
@@ -143,8 +151,9 @@ const ASK = [
   {
     q: "How does Jas use AI at work?",
     a: [
-      "He founded and led Work Faster & Smarter, a program that trained 100+ operations staff, from entry-level analysts to leadership, to use AI within strict governance rules.",
-      "Daily AI adoption went from 83% to 96%+ in 8 weeks, each person saved about 4 hours a week, and 1,000+ AI-generated outputs went out with zero policy violations.",
+      "He builds AI into the daily work itself: data pipelines where AI handles the ingestion, and websites vibe-coded with AI, like the insights dashboard on this site.",
+      "For his team he created AI skills and prompt libraries, and set up AI-automated queries that run daily-cadence workflows from nothing more than simple tables.",
+      "He also founded Work Faster & Smarter, which trained 100+ operations staff to use AI and lifted daily adoption from 83% to 96%+, with zero policy violations.",
     ],
   },
 ];
@@ -554,7 +563,7 @@ const localTime = document.getElementById("local-time");
 const manilaClock = new Intl.DateTimeFormat("en-US", { timeZone: "Asia/Manila", hour: "numeric", minute: "2-digit" });
 
 function updateLocalTime() {
-  localTime.textContent = `${manilaClock.format(new Date())} in Manila`;
+  localTime.textContent = `${manilaClock.format(new Date())} in Manila (GMT+8)`;
 }
 
 updateLocalTime();

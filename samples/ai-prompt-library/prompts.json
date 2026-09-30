@@ -1,0 +1,275 @@
+{
+  "title": "AI Prompt Library for Operations Teams",
+  "subtitle": "15 tested prompts for reporting, customer care, data cleanup, team communication and SOPs",
+  "version": "1.0",
+  "updated": "2026-09-30",
+  "note": "All examples use Harbor & Pine Co., a fictional Australian online home-goods store. Names, numbers and tickets are made up.",
+  "how_to_use": [
+    "Copy the template and replace every {placeholder} with your own details. Leave nothing in curly brackets.",
+    "Paste the whole thing into your AI assistant as one message. Put tables in as text, not screenshots.",
+    "Read the output against your source before you use it. Check every number, name and date.",
+    "If the first answer is off, say what is wrong and ask again. \"Shorter\", \"use the numbers from the table only\" and \"drop the apology\" work well.",
+    "When you improve a prompt, update this library so the whole team gets the better version."
+  ],
+  "ground_rules": [
+    {
+      "rule": "No customer personal data",
+      "detail": "Remove names, emails, phone numbers, street addresses and order numbers before pasting. Use [Customer] and [Order] instead."
+    },
+    {
+      "rule": "No payment or login details",
+      "detail": "Never paste card numbers, bank details, passwords or API keys, even partly masked."
+    },
+    {
+      "rule": "A person checks everything",
+      "detail": "Nothing an AI assistant writes goes to a customer, a manager or a system without a person reading it first."
+    },
+    {
+      "rule": "Numbers come from the source",
+      "detail": "The assistant can misread tables. Every figure in a report must match the original data."
+    },
+    {
+      "rule": "Approved tools only",
+      "detail": "Use the company-approved AI assistant with chat history set to the team workspace. Don't use personal accounts for work data."
+    },
+    {
+      "rule": "Don't let it decide policy",
+      "detail": "It can draft a refund reply. It can't approve the refund. Policy and approvals follow the SOP."
+    }
+  ],
+  "categories": [
+    {
+      "id": "reporting",
+      "label": "Reporting & analysis"
+    },
+    {
+      "id": "care",
+      "label": "Customer care"
+    },
+    {
+      "id": "cleanup",
+      "label": "Data cleanup"
+    },
+    {
+      "id": "comms",
+      "label": "Team communication"
+    },
+    {
+      "id": "sops",
+      "label": "SOPs & documentation"
+    }
+  ],
+  "prompts": [
+    {
+      "id": "weekly-kpi-commentary",
+      "category": "reporting",
+      "title": "Weekly KPI commentary",
+      "when": "You have this week's numbers and need short commentary for the leadership update.",
+      "template": "You are helping an operations analyst write the weekly KPI commentary for {audience}.\n\nHere are this week's KPIs, last week's, and the target for each:\n{kpi_table}\n\nWrite {number_of_bullets} bullet points. Rules:\n- Start with the metric furthest from target, good or bad.\n- For each, give the number, the change vs last week, and the gap to target.\n- Only give a reason if it appears in these notes: {context_notes}\n- If there's no reason in the notes, write \"cause not yet confirmed\".\n- Plain English. No words like \"significant\" or \"robust\". Max 25 words per bullet.",
+      "example_input": "audience: the Monday leadership meeting\nnumber_of_bullets: 4\nkpi_table:\nMetric | This week | Last week | Target\nOrders | 3,412 | 3,480 | 3,300\nAvg order value | A$96.51 | A$98.25 | A$100.00\nEmail first response (hrs) | 5.3 | 4.6 | 4.0\nDispatched within 24h | 91.0% | 95.3% | 95.0%\ncontext_notes: Two care agents on leave all week. Courier missed the Thursday pickup.",
+      "example_output": "- Dispatched within 24h fell to 91.0% from 95.3%, 4 points under the 95% target, after the courier missed Thursday's pickup.\n- Email first response rose to 5.3 hrs from 4.6, 1.3 hrs over the 4-hour target, with two care agents on leave.\n- Average order value dropped to A$96.51 from A$98.25, A$3.49 under target; cause not yet confirmed.\n- Orders were 3,412, down 2% on last week but 3% above the 3,300 target.",
+      "tips": [
+        "Paste the table as text. Screenshots cause misread numbers.",
+        "Check each figure in the bullets against your source before sending.",
+        "Keep your context notes factual. The assistant will repeat them as reasons."
+      ],
+      "safety": "Aggregated numbers only. No customer or order-level data."
+    },
+    {
+      "id": "explain-a-metric-swing",
+      "category": "reporting",
+      "title": "Explain a metric swing",
+      "when": "A number moved and someone asks why. Use it to list likely causes and the checks to confirm each one before you start digging.",
+      "template": "{metric} changed from {previous_value} to {current_value} between {period_1} and {period_2}.\n\nBusiness context: {business_context}\nData I can access: {available_data}\n\nList the 6 most likely explanations, most likely first. For each give:\n1. The explanation in one line\n2. The exact check I can run with the data above\n3. What result would confirm it\n\nDo not state any explanation as fact. If a check needs data I don't have, say so.",
+      "example_input": "metric: Refund rate\nprevious_value: 3.1%\ncurrent_value: 5.4%\nperiod_1: August\nperiod_2: September\nbusiness_context: Online home-goods store. New courier for Victoria from 1 Sep. New linen range launched 25 Aug.\navailable_data: Shopify order and refund exports, helpdesk tickets with reason tags, courier delivery report",
+      "example_output": "1. The new Victorian courier is damaging more parcels.\n   Check: Refunds by state and refund reason, August vs September.\n   Confirms it if: VIC \"damaged in transit\" refunds rise while other states stay flat.\n\n2. The new linen range has a sizing or quality problem.\n   Check: Refund rate by product collection. Read reason tags on linen refunds.\n   Confirms it if: Linen refund rate is well above the store average.\n\n3. Late August sale orders are coming back as change-of-mind returns.\n   Check: Refunds by original order date. Compare sale vs full-price orders.\n   Confirms it if: A spike in refunds on orders from the sale week...",
+      "tips": [
+        "Ask only for checks you can run with the data you listed.",
+        "Run the top two checks before you report anything upward."
+      ],
+      "safety": "Describe the data. Don't paste raw exports with customer details."
+    },
+    {
+      "id": "draft-a-sql-query",
+      "category": "reporting",
+      "title": "Draft a SQL query from a question",
+      "when": "You know what you want to see but need a starting query. Works best when you give the exact table and column names.",
+      "template": "Write a {sql_dialect} query that answers this question:\n{question}\n\nTables and columns:\n{schema}\n\nRules:\n- Use only the tables and columns above. Don't invent any.\n- Add a short comment above any join or filter that isn't obvious.\n- List any assumptions you made under the query.",
+      "example_input": "sql_dialect: PostgreSQL\nquestion: What was the refund rate by state for each of the last 8 weeks?\nschema:\norders(order_id, customer_id, order_date, state, total_aud, channel)\nrefunds(refund_id, order_id, refund_date, amount_aud, reason)",
+      "example_output": "SELECT\n  DATE_TRUNC('week', o.order_date) AS week_start,\n  o.state,\n  COUNT(DISTINCT o.order_id) AS orders,\n  COUNT(DISTINCT r.order_id) AS refunded_orders,\n  ROUND(100.0 * COUNT(DISTINCT r.order_id) / COUNT(DISTINCT o.order_id), 1) AS refund_rate_pct\nFROM orders o\n-- keep orders with no refund so they count in the denominator\nLEFT JOIN refunds r ON r.order_id = o.order_id\nWHERE o.order_date >= CURRENT_DATE - INTERVAL '8 weeks'\nGROUP BY 1, 2\nORDER BY 1, 2;\n\nAssumptions:\n- Refunds count against the week the order was placed, not the week of the refund.\n- An order with two partial refunds counts once.",
+      "tips": [
+        "Read the assumptions. That's where wrong answers hide.",
+        "Run it on one week first and compare the total with a number you already trust."
+      ],
+      "safety": "Share table and column names only, never the data itself."
+    },
+    {
+      "id": "delayed-order-reply",
+      "category": "care",
+      "title": "Reply to a delayed-order complaint",
+      "when": "A customer is unhappy about a late order and you want a calm, clear first draft that sticks to policy.",
+      "template": "Draft a reply to this customer message for {brand_name}.\n\nCustomer message:\n{customer_message}\n\nFacts I have confirmed:\n{order_facts}\n\nWhat policy allows me to offer:\n{policy_options}\n\nBrand voice: {brand_voice}\n\nRules:\n- Acknowledge the problem in one sentence. One apology only.\n- Give the facts and the next step with a date or timeframe.\n- Offer only what's listed in policy. Don't promise delivery dates the courier hasn't given.\n- Under 130 words. Sign off as {agent_first_name}.",
+      "example_input": "brand_name: Harbor & Pine Co.\ncustomer_message: I ordered a queen quilt cover over two weeks ago and it still hasn't arrived. The tracking hasn't changed in days. This was meant to be a gift. Really disappointed.\norder_facts: Ordered 12 Sep. Courier scan shows the parcel at the Tullamarine depot since 16 Sep. Courier investigation opened today, answer within 2 business days.\npolicy_options: Refund shipping (A$12.95) for delays over 5 business days. Send a replacement if the courier confirms the parcel is lost.\nbrand_voice: Warm, plain, no exclamation marks\nagent_first_name: Rica",
+      "example_output": "Hi [Customer],\n\nI'm sorry your quilt cover hasn't arrived, especially when it's meant to be a gift.\n\nI've checked the tracking. Your parcel has been at the courier's Tullamarine depot since 16 September and hasn't moved. I've opened an investigation with them today, and they'll come back to us within 2 business days.\n\nBecause of the delay, I've refunded your A$12.95 shipping. You'll see it in 3 to 5 business days.\n\nIf the courier confirms the parcel is lost, I'll send a replacement straight away and email you the new tracking link.\n\nKind regards,\nRica",
+      "tips": [
+        "Keep your macro library as the default. Use this prompt for messages that don't fit a macro.",
+        "Delete anything the draft promises that you haven't actually done yet."
+      ],
+      "safety": "Strip names, emails, phone numbers, addresses and order numbers first. Use [Customer] and [Order]."
+    },
+    {
+      "id": "ticket-handover-summary",
+      "category": "care",
+      "title": "Summarise a long ticket for handover",
+      "when": "You are escalating a ticket or handing it to the next shift and the thread is too long to read quickly.",
+      "template": "Summarise this customer ticket thread for {reader}.\n\nThread (oldest first):\n{ticket_thread}\n\nUse exactly these headings:\nIssue: one sentence\nWhat the customer wants: one sentence\nWhat we've done so far: bullets with dates\nWhat we've promised: bullets, or \"Nothing promised\"\nOpen question or next step: one line\nCustomer mood: calm / frustrated / angry, with the quote that shows it\n\nUse only what is in the thread. Don't guess missing details.",
+      "example_input": "reader: the Team Lead taking over the escalation\nticket_thread: [6 messages between the customer and two agents, 18-24 Sep, about a dining chair that arrived with a cracked leg. The customer sent photos on 19 Sep. A replacement was offered on 20 Sep, but the chair is out of stock until November. The customer now wants a refund and says they'll post a review if it isn't sorted this week.]",
+      "example_output": "Issue: Dining chair (Oak Carver) arrived with a cracked leg.\nWhat the customer wants: A full refund instead of waiting for a replacement.\nWhat we've done so far:\n- 19 Sep: Customer sent photos of the damage\n- 20 Sep: Replacement offered\n- 23 Sep: Told the customer the chair is out of stock until November\nWhat we've promised: Nothing promised on the refund yet\nOpen question or next step: Approve the refund. The value is over A$150, so it needs Team Lead approval.\nCustomer mood: Frustrated. \"If this isn't sorted this week I'll be leaving a review.\"",
+      "tips": [
+        "Paste the thread oldest first so dates line up.",
+        "Add the summary as an internal note, not a public reply."
+      ],
+      "safety": "Strip names, emails, phone numbers, addresses and order numbers first. Use [Customer] and [Order]."
+    },
+    {
+      "id": "tag-contact-reasons",
+      "category": "care",
+      "title": "Tag tickets by contact reason",
+      "when": "You have a batch of untagged or badly tagged tickets and need contact-reason counts for the weekly report.",
+      "template": "Classify each ticket below into exactly one contact reason from this list:\n{reason_list}\n\nIf none fit, use \"Other\" and give a 3-word suggestion for a new reason.\n\nTickets (ID | one-line summary):\n{ticket_list}\n\nReturn a table: Ticket ID | Reason | Confidence (High/Medium/Low)\nThen give a count by reason.",
+      "example_input": "reason_list: Where is my order, Damaged item, Change of mind return, Product question, Discount code issue, Address change\nticket_list:\nT-2201 | Parcel says delivered but not at my door\nT-2202 | Can I wash the linen throw in hot water?\nT-2203 | Code WINTER15 not working at checkout\nT-2204 | Mug handle snapped in the box\nT-2205 | Want to swap the grey cushion for sage\nT-2206 | Moving house next week, can you update delivery?",
+      "example_output": "Ticket ID | Reason | Confidence\nT-2201 | Where is my order | Medium\nT-2202 | Product question | High\nT-2203 | Discount code issue | High\nT-2204 | Damaged item | High\nT-2205 | Change of mind return | Medium\nT-2206 | Address change | High\n\nCounts: Where is my order 1, Product question 1, Discount code issue 1, Damaged item 1, Change of mind return 1, Address change 1\n\nNote: T-2201 could also be a lost parcel claim. Worth a separate reason if it comes up often.",
+      "tips": [
+        "Always give a fixed list. Open-ended tagging drifts week to week.",
+        "Spot-check 20 tickets, and every Low confidence one, before using the counts."
+      ],
+      "safety": "Use your own one-line summaries, not raw customer messages."
+    },
+    {
+      "id": "sheets-formula",
+      "category": "cleanup",
+      "title": "Build a Google Sheets formula",
+      "when": "You know what the result should look like but not the formula. Also useful for fixing a formula someone else wrote.",
+      "template": "I'm working in {app}. Write a formula for this:\n\nWhat the data looks like now: {current_data}\nWhat I need: {desired_result}\nWhere the formula goes: {target_cell}\n\nRules:\n- Use functions that work in {app}.\n- Explain each part of the formula in one line.\n- Tell me which inputs would break it.",
+      "example_input": "app: Google Sheets\ncurrent_data: Column A has order dates as text in day/month/year with a time, like \"3/09/2026 14:22\". Column B has state written different ways: \"vic\", \"Victoria\", \"VIC \", \"N.S.W\".\ndesired_result: A real date in column C. A standard state code (VIC, NSW, QLD...) in column D, using a lookup tab called StateMap.\ntarget_cell: C2 and D2, filled down",
+      "example_output": "C2:\n=DATE(VALUE(REGEXEXTRACT(A2,\"/(\\d{4})\")), VALUE(REGEXEXTRACT(A2,\"/(\\d{1,2})/\")), VALUE(REGEXEXTRACT(A2,\"^(\\d{1,2})/\")))\n\n- REGEXEXTRACT pulls the year, month and day out of the text separately.\n- VALUE turns each piece into a number.\n- DATE builds the date, so the sheet's locale can't swap day and month.\n\nD2:\n=IFERROR(VLOOKUP(LOWER(SUBSTITUTE(TRIM(B2),\".\",\"\")), StateMap!A:B, 2, FALSE), \"CHECK\")\n\n- TRIM and SUBSTITUTE remove spaces and dots. LOWER makes the match case-proof.\n- StateMap column A holds every spelling in lower case, column B the code.\n- Anything not in the map shows CHECK so you can add it.\n\nBreaks if: a date has no slash, or a new state spelling isn't in StateMap yet.",
+      "tips": [
+        "Test on 5 awkward rows before you fill down 5,000.",
+        "Ask for the Excel version too if the file might be opened there."
+      ],
+      "safety": "Describe the columns. Only paste sample values that aren't customer data."
+    },
+    {
+      "id": "standardise-text-values",
+      "category": "cleanup",
+      "title": "Standardise messy text values",
+      "when": "A column has the same thing spelled ten ways (suppliers, products, cities) and you need one clean name for each.",
+      "template": "Here is a list of {value_type} values from a spreadsheet. Many are the same thing written differently.\n\n{values}\n\nGroup them and return a mapping table: Original value | Clean value.\nRules:\n- Use {naming_rule} for the clean value.\n- If you're not sure two values are the same, keep them separate and list them under \"Please confirm\".\n- Don't drop any original value.",
+      "example_input": "value_type: supplier name\nnaming_rule: the full registered name in title case, e.g. \"Coastal Linen Pty Ltd\"\nvalues:\nCoastal Linen Pty Ltd\ncoastal linen\nCoastal Linens\nCOASTAL LINEN PTY. LTD.\nBirchwood Ceramics\nBirchwood ceramic co\nBirch Wood Ceramics\nKettle & Crate\nKettle and Crate\nCoastline Textiles",
+      "example_output": "Original value | Clean value\nCoastal Linen Pty Ltd | Coastal Linen Pty Ltd\ncoastal linen | Coastal Linen Pty Ltd\nCoastal Linens | Coastal Linen Pty Ltd\nCOASTAL LINEN PTY. LTD. | Coastal Linen Pty Ltd\nBirchwood Ceramics | Birchwood Ceramics\nBirchwood ceramic co | Birchwood Ceramics\nBirch Wood Ceramics | Birchwood Ceramics\nKettle & Crate | Kettle & Crate\nKettle and Crate | Kettle & Crate\nCoastline Textiles | Coastline Textiles\n\nPlease confirm:\n- \"Coastline Textiles\" looks like a different supplier from Coastal Linen. Kept separate.",
+      "tips": [
+        "Paste the mapping into a lookup tab and use VLOOKUP or XLOOKUP. Don't find-and-replace the raw data.",
+        "Keep the lookup tab. Next month you only add new spellings."
+      ],
+      "safety": "Fine for business names and products. Don't use it on customer names."
+    },
+    {
+      "id": "apps-script-automation",
+      "category": "cleanup",
+      "title": "Write an Apps Script for a repeat Sheets task",
+      "when": "You do the same steps in a Google Sheet every day or week and want a script to do them for you.",
+      "template": "Write a Google Apps Script for this spreadsheet.\n\nTabs and columns: {sheet_structure}\nWhat I do by hand now: {manual_steps}\nWhen it should run: {schedule}\n\nRequirements:\n- One main function I can run from the Apps Script editor.\n- Read and write in bulk with getValues and setValues, not cell by cell.\n- Log how many rows it changed.\n- Add a DRY_RUN setting at the top that logs what would change without writing.\n- Explain how to set up the time-driven trigger.",
+      "example_input": "sheet_structure: \"Raw\" tab has a header row, then Date (col A), Order ID, SKU, Qty, Status. \"Archive\" tab has the same headers.\nmanual_steps: Every morning I copy all rows dated before today from Raw to the bottom of Archive, then delete them from Raw.\nschedule: Every day between 6 and 7 AM, Melbourne time",
+      "example_output": "const DRY_RUN = true;\n\nfunction archiveOldRows() {\n  const ss = SpreadsheetApp.getActive();\n  const raw = ss.getSheetByName('Raw');\n  const archive = ss.getSheetByName('Archive');\n  const [header, ...rows] = raw.getDataRange().getValues();\n  const today = new Date();\n  today.setHours(0, 0, 0, 0);\n\n  const move = rows.filter(r => r[0] instanceof Date && r[0] < today);\n  const keep = rows.filter(r => !(r[0] instanceof Date && r[0] < today));\n  console.log(`${move.length} rows to archive, ${keep.length} stay`);\n  if (DRY_RUN || !move.length) return;\n\n  archive.getRange(archive.getLastRow() + 1, 1, move.length, header.length).setValues(move);\n  raw.getRange(2, 1, rows.length, header.length).clearContent();\n  if (keep.length) raw.getRange(2, 1, keep.length, header.length).setValues(keep);\n}\n\nTrigger: in the editor go to Triggers > Add trigger > archiveOldRows > Time-driven > Day timer > 6am to 7am. Check the project time zone is Australia/Melbourne under Project Settings.",
+      "tips": [
+        "Run it on a copy of the sheet first with DRY_RUN = true.",
+        "Ask the assistant to walk through what happens if a date cell is blank or text."
+      ],
+      "safety": "Share the structure and a few made-up rows, not the real data."
+    },
+    {
+      "id": "process-change-announcement",
+      "category": "comms",
+      "title": "Announce a process change",
+      "when": "A process is changing and the team needs a short, clear message they'll actually read.",
+      "template": "Write a {channel} message announcing a process change to {audience}.\n\nWhat's changing: {change}\nStarts: {start_date}\nWhy: {reason}\nWhat people need to do: {actions}\nWhere to ask questions: {contact}\n\nFormat:\n- First line says what changes and when.\n- Then \"What you need to do\" as 2-4 bullets.\n- Then one line on why.\n- Under 120 words. No \"exciting news\" or \"we're thrilled\".",
+      "example_input": "channel: Google Chat\naudience: the customer care team in Melbourne and Manila\nchange: Refunds over A$150 need Team Lead approval in the helpdesk before you process them in Shopify\nstart_date: Monday 12 October\nreason: Three large refunds last month went out for items that were never returned\nactions: Add an internal note asking for approval, tag the ticket \"refund-approval\", wait for \"Approved\" plus initials before processing\ncontact: #care-escalations or your Team Lead",
+      "example_output": "From Monday 12 October, refunds over A$150 need Team Lead approval before you process them in Shopify.\n\nWhat you need to do:\n- Add an internal note on the ticket asking for approval\n- Tag the ticket refund-approval\n- Wait for \"Approved\" plus initials in the notes, then process the refund\n\nWhy: three large refunds last month went out for items that were never returned.\n\nSOP-CC-004 is updated. Questions go in #care-escalations or to your Team Lead.",
+      "tips": [
+        "Post it at the start of both the Melbourne and Manila shifts.",
+        "Pin it for the first week, then link it in the SOP."
+      ],
+      "safety": null
+    },
+    {
+      "id": "coaching-conversation-prep",
+      "category": "comms",
+      "title": "Prepare a coaching conversation",
+      "when": "You have a 1:1 or coaching session coming up and want a clear structure with specific examples.",
+      "template": "Help me prepare a {session_length} coaching conversation with a {role}.\n\nRecent numbers vs target:\n{metrics}\n\nWhat I've observed (with examples):\n{observations}\n\nThe one thing I want them to improve: {focus_area}\n\nGive me:\n1. An opening line that sets a supportive tone\n2. Two strengths to recognise, using the examples above\n3. How to raise the focus area, with one specific example\n4. Three open questions to understand what's getting in the way\n5. A way to agree one action and a check-in date\nKeep it conversational. No HR jargon.",
+      "example_input": "session_length: 20-minute\nrole: customer care specialist, 4 months in\nmetrics: QA score 88% (target 92%). CSAT 93% (target 90%). Email first response 3.1 hrs (target 4).\nobservations: Customers often thank them by name. Fast replies. Two of the last ten QA samples had a refund processed without checking the delivery date. One had the wrong return label type.\nfocus_area: Checking eligibility properly before refunds",
+      "example_output": "1. \"Thanks for making time. I want to start with what's going well, because there's a lot of it.\"\n\n2. Strengths\n- Your CSAT is 93%, above target, and customers keep thanking you by name in their replies.\n- You're answering emails in 3.1 hours against a 4-hour target, which helps the whole queue.\n\n3. Focus area\n\"The one thing I'd like us to work on is the eligibility check before refunds. In two of your last ten QA reviews, the refund went through without checking the delivery date...\"\n\n4. Questions\n- \"Walk me through what you check before you process a refund.\"\n- \"When the queue is busy, which steps feel easiest to skip?\"\n- \"What would make the delivery-date check quicker for you?\"...",
+      "tips": [
+        "Bring the actual QA examples to the session.",
+        "Use the output as notes, not a script. Let them talk more than you do."
+      ],
+      "safety": "Use a role, not a name. Never include HR, medical or personal details."
+    },
+    {
+      "id": "meeting-notes-to-actions",
+      "category": "comms",
+      "title": "Turn meeting notes into actions",
+      "when": "You have rough notes from a meeting and need to send decisions and actions out the same day.",
+      "template": "Turn these rough meeting notes into a follow-up message.\n\nMeeting: {meeting_name}, {date}\nAttendees: {attendees}\nNotes:\n{notes}\n\nFormat:\nDecisions: bullets\nActions: table with Action | Owner | Due date\nOpen questions: bullets, or \"None\"\n\nRules: only include owners and dates that are in the notes. If an action has no owner or date, write \"TBC\" so I can fill it in.",
+      "example_input": "meeting_name: Weekly ops sync\ndate: Tuesday 29 September\nattendees: Ops Manager, Care Team Lead, Fulfilment Coordinator, Marketing Lead\nnotes: dispatch dipped last wk bc courier missed thurs - fulfilment to ask courier for a backup pickup slot. care FRT over target, 2 on leave. TL to move 1 manila agent from chat to email for 2 wks. black friday planning - marketing to share promo calendar by 9 oct. agreed no new product launches in Nov. who owns the returns tracker cleanup? not decided",
+      "example_output": "Decisions:\n- No new product launches in November.\n- One Manila agent moves from chat to email for two weeks.\n\nActions:\nAction | Owner | Due date\nAsk the courier for a backup pickup slot | Fulfilment Coordinator | TBC\nMove one Manila agent from chat to email | Care Team Lead | TBC\nShare the Black Friday promo calendar | Marketing Lead | Fri 9 October\n\nOpen questions:\n- Who owns the returns tracker cleanup?",
+      "tips": [
+        "Fill in every TBC before you send it. Actions without owners don't happen.",
+        "Send it within an hour of the meeting while people still remember."
+      ],
+      "safety": null
+    },
+    {
+      "id": "sop-from-rough-notes",
+      "category": "sops",
+      "title": "Draft an SOP from rough notes",
+      "when": "The process lives in someone's head or in scattered notes and you need a first SOP draft to review.",
+      "template": "Turn these notes into a standard operating procedure draft.\n\nProcess: {process_name}\nWho does it: {roles}\nTools used: {tools}\nRough notes or transcript:\n{notes}\n\nUse this structure:\nPurpose, Scope, Roles, Tools, Definitions, Procedure (numbered steps, each starting with a verb), Decision points (as \"If... then...\"), SLAs, Escalation, Common mistakes.\n\nRules:\n- One action per step.\n- Mark anything missing from my notes as [TO CONFIRM] instead of guessing.",
+      "example_input": "process_name: Reshipping a lost parcel\nroles: Customer care specialist, Fulfilment coordinator\ntools: Helpdesk, Shopify, courier portal, Returns tracker (Google Sheet)\nnotes: if tracking not moved 5 bus days raise claim w courier. wait 2 days for answer. if lost - new order in shopify at $0, note original order no. fulfilment picks same day if before 1pm. tell customer new tracking. if item OOS offer refund instead. log in tracker tab 'Lost'",
+      "example_output": "Procedure\n1. Check the tracking in the courier portal.\n2. If tracking hasn't moved for 5 business days, raise a lost-parcel claim in the courier portal.\n3. Add the claim number as an internal note on the ticket.\n4. Wait up to 2 business days for the courier's answer.\n5. If the courier confirms it's lost, create a new A$0 order in Shopify and add the original order number in the order notes.\n6. Check stock. If the item is out of stock, offer a refund instead and follow SOP-CC-004.\n7. Log the case in the Returns tracker, \"Lost\" tab.\n...\nSLAs\n- Replacement dispatched the same day if the order is created before 1 PM Melbourne time.\n- Customer updated within [TO CONFIRM] of the courier's answer.",
+      "tips": [
+        "Have the person who does the job read the draft and fix it. That's the real review.",
+        "Resolve every [TO CONFIRM] before you publish."
+      ],
+      "safety": "Remove any real customer examples from the notes."
+    },
+    {
+      "id": "sop-gap-check",
+      "category": "sops",
+      "title": "Find gaps in an existing SOP",
+      "when": "Before you publish or review an SOP. It reads the document like a new starter would and points out what's unclear.",
+      "template": "Read this SOP as if you were a new {role} on your second day.\n\n{sop_text}\n\nList:\n1. Steps that are unclear or could be read two ways, and the question you'd ask\n2. Decisions the SOP doesn't cover (edge cases), with a realistic example of each\n3. Terms or systems used without explanation\n4. Steps that seem to be missing between two other steps\n\nBe specific. Quote the line you're talking about. Don't rewrite the SOP.",
+      "example_input": "role: customer care specialist\nsop_text: [an early draft of the change-of-mind section of SOP-CC-004, Refund and Return Requests]",
+      "example_output": "1. Unclear steps\n- \"Check the item is within the return window.\" Is the 30 days counted from the order date or the delivery date? Where do I find the delivery date?\n- \"Deduct return shipping if applicable.\" When is it applicable, and how much?\n\n2. Decisions not covered\n- The customer returns 2 of 3 items from a bundle deal. How do I work out the refund?\n- The parcel arrives back after day 30, but the customer asked on day 28.\n\n3. Terms not explained\n- \"Grade B\" is used in step 6 but never defined.\n\n4. Missing steps\n- Between \"Send the return label\" and \"Receive the item\": what does the customer get told about timelines?",
+      "tips": [
+        "Run it again after you fix the gaps. The second pass finds smaller issues.",
+        "Add the edge cases it finds to the Common mistakes section."
+      ],
+      "safety": null
+    },
+    {
+      "id": "sop-training-quiz",
+      "category": "sops",
+      "title": "Build a training quiz from an SOP",
+      "when": "A new starter has read the SOP and you want to check they can apply it, not just remember it.",
+      "template": "Create a {number_of_questions}-question quiz from this SOP for a new {role}.\n\n{sop_text}\n\nRules:\n- At least 70% of questions are short scenarios (\"A customer says... what do you do?\").\n- Multiple choice with 4 options. Wrong options should be mistakes people actually make.\n- Include an answer key with a one-line reason, pointing to the SOP step.\n- Pass mark: {pass_mark}.",
+      "example_input": "number_of_questions: 8\nrole: customer care specialist\nsop_text: [full text of SOP-CC-004, Refund and Return Requests]\npass_mark: 7 out of 8",
+      "example_output": "Q3. A customer asks to return a cushion they no longer want. Tracking shows it was delivered 26 days ago, but they ordered it 34 days ago. What do you do?\nA. Decline. It's outside 30 days.\nB. Accept the return. It's within 30 days of delivery.\nC. Offer store credit only.\nD. Escalate to the Team Lead.\n\nQ5. A refund for a damaged dining chair comes to A$289. What do you do before processing it?\nA. Process it. Damaged items don't need approval.\nB. Ask the Team Lead for approval in an internal note.\nC. Ask the Operations Manager.\nD. Ask the customer to return the chair first.\n\nAnswer key\nQ3: B. The window runs from the delivery date (Step 5).\nQ5: B. Refunds between A$150 and A$500 need Team Lead approval (Step 7).",
+      "tips": [
+        "Check every answer against the SOP yourself. Fix the SOP if the quiz exposes a gap.",
+        "Ask for a fresh set for each new hire so answers don't get passed around."
+      ],
+      "safety": null
+    }
+  ]
+}

@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Prompt Library for Operations Teams | Jastin Tucay</title>
+  <meta name="description" content="15 copy-ready AI prompts for operations and customer care teams: reporting, customer replies, data cleanup, team updates and SOPs. A sample project by Jastin Tucay.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://pantinpo.github.io/prompt-library.html">
+  <meta property="og:title" content="AI Prompt Library for Operations Teams">
+  <meta property="og:description" content="15 copy-ready prompts with templates, examples and ground rules for safe use.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 60px;
+      font-size: 14px;
+    }
+
+    .topbar a {
+      color: var(--text-secondary);
+      text-decoration: none;
+    }
+
+    .topbar a:hover { color: var(--text-primary); }
+
+    .pl-intro { padding: 40px 0 8px; }
+
+    .pl-intro h1 { font-size: clamp(34px, 4.6vw, 50px); }
+
+    .pl-intro .section-intro { margin: 18px 0 24px; }
+
+    .pl-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .pl-note {
+      margin: 18px 0 0;
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    .pl-rules {
+      display: grid;
+      grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+      gap: 14px;
+      margin-top: 48px;
+    }
+
+    .pl-panel {
+      padding: 28px;
+      border-radius: 22px;
+    }
+
+    .pl-panel h2 {
+      font-size: 20px;
+      letter-spacing: -0.01em;
+      margin-bottom: 14px;
+    }
+
+    .pl-steps {
+      margin: 0;
+      padding-left: 20px;
+      color: var(--text-secondary);
+      font-size: 15px;
+    }
+
+    .pl-steps li + li { margin-top: 8px; }
+
+    .pl-rule-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px 22px;
+      margin: 0;
+    }
+
+    .pl-rule-grid dt {
+      font-weight: 600;
+      font-size: 15px;
+    }
+
+    .pl-rule-grid dd {
+      margin: 2px 0 0;
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    .pl-browse { padding-top: 64px; }
+
+    .pl-controls {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 12px 16px;
+      margin-bottom: 14px;
+    }
+
+    .pl-search {
+      flex: 1 1 280px;
+      max-width: 420px;
+      padding: 11px 16px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--surface-raised);
+      color: var(--text-primary);
+      font: inherit;
+      font-size: 15px;
+    }
+
+    .pl-search::placeholder { color: var(--text-muted); }
+
+    .pl-count {
+      margin: 0;
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    .pl-clear {
+      padding: 0;
+      border: 0;
+      background: none;
+      color: var(--accent-text);
+      font: inherit;
+      font-size: 14px;
+      cursor: pointer;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .pl-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+
+    .pl-chip {
+      padding: 7px 14px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: var(--surface-raised);
+      color: var(--text-secondary);
+      font: inherit;
+      font-size: 14px;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s, color 0.2s;
+    }
+
+    .pl-chip:hover { color: var(--text-primary); }
+
+    .pl-chip[aria-pressed="true"] {
+      border-color: var(--accent);
+      background: var(--accent);
+      color: #ffffff;
+    }
+
+    .pl-chip-count {
+      margin-left: 4px;
+      font-size: 12px;
+      opacity: 0.7;
+    }
+
+    .pl-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      align-items: start;
+    }
+
+    .pl-card {
+      padding: 24px;
+      border-radius: 22px;
+    }
+
+    .pl-card[hidden] { display: none; }
+
+    .pl-card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .pl-tag {
+      padding: 3px 11px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: var(--surface);
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    .pl-copy {
+      position: relative;
+      z-index: 1;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .pl-copy.is-copied {
+      background: #1f8a4c;
+      border-color: #1f8a4c;
+    }
+
+    .pl-card h3 { font-size: 19px; }
+
+    .pl-when {
+      margin: 6px 0 14px;
+      font-size: 15px;
+      color: var(--text-secondary);
+    }
+
+    .pl-card pre {
+      position: relative;
+      margin: 0;
+      padding: 14px 16px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--surface);
+      font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+      font-size: 13px;
+      line-height: 1.55;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      color: var(--text-primary);
+    }
+
+    .pl-template {
+      max-height: 260px;
+      overflow-y: auto;
+    }
+
+    .ph {
+      padding: 0 3px;
+      border-radius: 4px;
+      background: var(--accent-soft);
+      color: var(--accent-text);
+      font-weight: 600;
+    }
+
+    .pl-details { margin-top: 14px; }
+
+    .pl-details summary {
+      position: relative;
+      z-index: 1;
+      width: fit-content;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--accent-text);
+      cursor: pointer;
+    }
+
+    .pl-details h4 {
+      margin: 16px 0 8px;
+      font-size: 13px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .pl-muted {
+      font-weight: 400;
+      text-transform: none;
+      letter-spacing: 0;
+    }
+
+    .pl-output { background: var(--accent-soft); }
+
+    .pl-tips {
+      margin: 0;
+      padding-left: 20px;
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    .pl-safety {
+      margin: 14px 0 0;
+      padding: 10px 14px;
+      border-left: 3px solid var(--series-1);
+      border-radius: 0 8px 8px 0;
+      background: var(--surface);
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    .pl-empty {
+      padding: 36px;
+      text-align: center;
+      color: var(--text-secondary);
+    }
+
+    .pl-chip:focus-visible,
+    .pl-copy:focus-visible,
+    .pl-clear:focus-visible,
+    .pl-search:focus-visible,
+    .pl-card pre:focus-visible,
+    .pl-details summary:focus-visible {
+      outline: 2px solid var(--series-1);
+      outline-offset: 2px;
+    }
+
+    .pl-bottom {
+      margin: 64px 0 72px;
+      padding: 32px;
+      border-radius: 22px;
+      text-align: center;
+    }
+
+    .pl-bottom p {
+      max-width: 560px;
+      margin: 8px auto 20px;
+      color: var(--text-secondary);
+    }
+
+    .pl-bottom .pl-actions { justify-content: center; }
+
+    @media (max-width: 900px) {
+      .pl-rules,
+      .pl-list { grid-template-columns: minmax(0, 1fr); }
+    }
+
+    @media (max-width: 560px) {
+      .pl-rule-grid { grid-template-columns: minmax(0, 1fr); }
+      .pl-panel,
+      .pl-card { padding: 20px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .pl-chip { transition: none; }
+      .button:hover { transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="topbar">
+      <a href="index.html">← Jastin Tucay</a>
+      <a href="services.html">Services</a>
+    </header>
+
+    <main>
+      <section class="pl-intro" aria-labelledby="pl-title">
+        <p class="eyebrow">Sample project · AI enablement</p>
+        <h1 id="pl-title">AI prompt library for operations teams</h1>
+        <p class="section-intro">
+          15 prompts for the everyday work of an operations and customer care team: weekly reporting,
+          customer replies, data cleanup, team updates and SOPs. Each one has a fill-in template,
+          a worked example and tips, plus the ground rules that keep customer data out of AI tools.
+        </p>
+        <div class="pl-actions">
+          <a href="#pl-browse" class="button">Browse the prompts</a>
+          <a href="samples/ai-prompt-library/ai-prompt-library.docx" class="button button-secondary" download>Download the Word version</a>
+        </div>
+        <p class="pl-note">The examples use Harbor &amp; Pine Co., a fictional Australian home-goods store. All names and numbers are made up.</p>
+      </section>
+
+      <section class="pl-rules" aria-label="How to use the library">
+        <div class="card pl-panel">
+          <h2>How to use it</h2>
+          <ol class="pl-steps">
+            <li>Copy a prompt and fill in every <span class="ph">{placeholder}</span>.</li>
+            <li>Paste it into your AI assistant as one message. Tables go in as text, not screenshots.</li>
+            <li>Check the output against your source: every number, name and date.</li>
+            <li>If it's off, say what's wrong and ask again.</li>
+          </ol>
+        </div>
+        <div class="card pl-panel" id="ground-rules">
+          <h2>Ground rules</h2>
+          <dl class="pl-rule-grid">
+            <div><dt>No customer personal data</dt><dd>Strip names, emails, phones, addresses and order numbers first.</dd></div>
+            <div><dt>No payment or login details</dt><dd>Never paste card numbers, bank details, passwords or keys.</dd></div>
+            <div><dt>A person checks everything</dt><dd>Nothing goes to a customer or a manager unread.</dd></div>
+            <div><dt>Numbers come from the source</dt><dd>Every figure in a report must match the original data.</dd></div>
+            <div><dt>Approved tools only</dt><dd>Use the team's approved assistant, not personal accounts.</dd></div>
+            <div><dt>It doesn't decide policy</dt><dd>It can draft the refund reply. It can't approve the refund.</dd></div>
+          </dl>
+        </div>
+      </section>
+
+      <section class="pl-browse" id="pl-browse" aria-labelledby="pl-browse-title">
+        <h2 id="pl-browse-title">The prompts</h2>
+        <div class="pl-controls">
+          <label for="pl-search" class="sr-only">Search prompts</label>
+          <input type="search" id="pl-search" class="pl-search" placeholder="Search, e.g. refund, SQL, SOP" autocomplete="off">
+          <p class="pl-count" id="pl-count" aria-live="polite"></p>
+          <button type="button" class="pl-clear" id="pl-clear" hidden>Clear filters</button>
+        </div>
+        <div class="pl-chips" id="pl-chips" role="group" aria-label="Filter by category"></div>
+        <div class="pl-list" id="pl-list"></div>
+        <div class="card pl-empty" id="pl-empty" hidden>No prompts match that search. Try a shorter word or pick another category.</div>
+        <noscript>
+          <div class="card pl-empty">This page needs JavaScript to show the prompts. You can <a href="samples/ai-prompt-library/ai-prompt-library.docx">download the Word version</a> instead.</div>
+        </noscript>
+        <p class="sr-only" id="pl-announce" aria-live="polite"></p>
+      </section>
+
+      <section class="card pl-bottom" aria-labelledby="pl-bottom-title">
+        <h2 id="pl-bottom-title">Want a library like this for your team?</h2>
+        <p>I build prompt libraries around a team's real tasks, test them on real examples, and write the ground rules so people use AI safely.</p>
+        <div class="pl-actions">
+          <a href="services.html" class="button">See my services</a>
+          <a href="samples/ai-prompt-library/prompts.json" class="button button-secondary">Get the prompts as JSON</a>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <footer class="site-footer"><div class="container">© 2026 Jastin Rada Tucay</div></footer>
+
+  <script src="prompt-library.js"></script>
+</body>
+</html>

@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Erlang C Staffing Calculator | Jastin Tucay</title>
+  <meta name="description" content="Interactive Erlang C staffing calculator: turn a half-hourly call forecast into agents required, service level and scheduled hours. A workforce management sample by Jastin Tucay.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://pantinpo.github.io/erlang-calculator.html">
+  <meta property="og:title" content="Erlang C Staffing Calculator | Jastin Tucay">
+  <meta property="og:description" content="Turn a half-hourly call forecast into agents required, service level and scheduled hours.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 60px;
+      font-size: 14px;
+    }
+
+    .topbar a {
+      color: var(--text-secondary);
+      text-decoration: none;
+    }
+
+    .topbar a:hover,
+    .topbar .logo {
+      color: var(--text-primary);
+    }
+
+    .intro {
+      padding: 28px 0 32px;
+    }
+
+    .intro p:not(.eyebrow) {
+      max-width: 680px;
+      margin: 16px 0 0;
+      color: var(--text-secondary);
+    }
+
+    .intro .hero-actions {
+      margin-top: 24px;
+    }
+
+    .calc-grid {
+      display: grid;
+      grid-template-columns: 300px minmax(0, 1fr);
+      gap: 16px;
+      align-items: start;
+    }
+
+    .panel {
+      padding: 24px;
+    }
+
+    .panel h2,
+    .method h2 {
+      margin-bottom: 4px;
+      font-size: 18px;
+      letter-spacing: 0;
+    }
+
+    .panel-note {
+      margin: 0 0 20px;
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    .field {
+      display: grid;
+      grid-template-columns: 1fr 96px;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    .field input {
+      width: 100%;
+      padding: 8px 10px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--surface);
+      color: var(--text-primary);
+      font: inherit;
+      font-variant-numeric: tabular-nums;
+      text-align: right;
+    }
+
+    .field input:focus-visible,
+    .volume input:focus-visible {
+      outline: 2px solid var(--accent-text);
+      outline-offset: 2px;
+    }
+
+    .field input:invalid {
+      border-color: #d0453b;
+    }
+
+    .volume {
+      margin: 20px 0 16px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    .volume-head {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+
+    .volume output {
+      font-weight: 600;
+      color: var(--text-primary);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .volume input {
+      width: 100%;
+      accent-color: var(--accent);
+    }
+
+    .kpis {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .kpi {
+      padding: 18px;
+      border-radius: 14px;
+    }
+
+    .kpi-label {
+      margin: 0;
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    .kpi-value {
+      margin: 4px 0 0;
+      font-size: 32px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .kpi-note {
+      margin: 2px 0 0;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .chart-table table {
+      width: 100%;
+    }
+
+    .chart-table td,
+    .chart-table th {
+      padding-right: 12px;
+      text-align: right;
+    }
+
+    .chart-table td:first-child,
+    .chart-table th:first-child {
+      text-align: left;
+    }
+
+    .table-scroll {
+      overflow-x: auto;
+    }
+
+    .bar-key {
+      width: 8px;
+      height: 8px;
+      border-radius: 2px;
+    }
+
+    .tooltip-detail {
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    .method {
+      margin-top: 16px;
+      padding: 24px;
+    }
+
+    .method ul {
+      margin: 12px 0 0;
+      padding-left: 20px;
+      color: var(--text-secondary);
+      font-size: 15px;
+    }
+
+    .method li + li {
+      margin-top: 6px;
+    }
+
+    .method code {
+      font-size: 14px;
+      color: var(--text-primary);
+    }
+
+    .fine-print {
+      margin: 16px 0 64px;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    @media (max-width: 900px) {
+      .calc-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .kpis {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 480px) {
+      .panel,
+      .method {
+        padding: 20px;
+      }
+
+      .kpi-value {
+        font-size: 26px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="topbar">
+      <a href="index.html" class="logo">Jastin Tucay</a>
+      <a href="services.html">← Services</a>
+    </header>
+
+    <main>
+      <div class="intro">
+        <p class="eyebrow">Sample · Workforce management</p>
+        <h1>Erlang C staffing calculator</h1>
+        <p>
+          How many agents do you need each half hour to answer 80% of calls in 20 seconds? Change the targets or the
+          day's volume and the staffing plan updates. This runs the same Erlang C maths as the Google Sheets and Excel
+          toolkit it comes from, which also includes an intraday RTA view and an adherence tracker.
+        </p>
+        <div class="hero-actions">
+          <a href="samples/wfm-toolkit/wfm-toolkit.xlsx" class="button" download>Download the workbook</a>
+          <a href="https://github.com/pantinpo/pantinpo.github.io/tree/main/samples/wfm-toolkit" class="button button-secondary" target="_blank" rel="noopener">How it works</a>
+        </div>
+      </div>
+
+      <div class="calc-grid">
+        <form class="card panel" id="calc-form" novalidate>
+          <h2>Targets</h2>
+          <p class="panel-note">Harbor &amp; Pine Co. phone queue, Monday 07:00 to 22:00 AEST.</p>
+
+          <label class="field">Service level target (%)
+            <input id="sl" type="number" inputmode="numeric" min="50" max="99" step="1" value="80" required>
+          </label>
+          <label class="field">Answer within (sec)
+            <input id="target" type="number" inputmode="numeric" min="5" max="300" step="1" value="20" required>
+          </label>
+          <label class="field">Average handle time (sec)
+            <input id="aht" type="number" inputmode="numeric" min="30" max="1800" step="1" value="330" required>
+          </label>
+          <label class="field">Shrinkage (%)
+            <input id="shrinkage" type="number" inputmode="numeric" min="0" max="60" step="1" value="30" required>
+          </label>
+          <label class="field">Max occupancy (%)
+            <input id="occupancy" type="number" inputmode="numeric" min="50" max="100" step="1" value="85" required>
+          </label>
+
+          <div class="volume">
+            <div class="volume-head">
+              <label for="volume">Daily call volume</label>
+              <output id="volume-value" for="volume">1,191 calls</output>
+            </div>
+            <input id="volume" type="range" min="300" max="3000" step="1" value="1191">
+          </div>
+
+          <button type="button" class="button button-secondary button-small" id="calc-reset">Reset to defaults</button>
+        </form>
+
+        <div>
+          <div class="kpis">
+            <div class="card kpi">
+              <p class="kpi-label">Peak agents</p>
+              <p class="kpi-value" id="kpi-peak">17</p>
+              <p class="kpi-note" id="kpi-peak-note"></p>
+            </div>
+            <div class="card kpi">
+              <p class="kpi-label">Agent-hours on phones</p>
+              <p class="kpi-value" id="kpi-hours">158.5</p>
+              <p class="kpi-note">logged in and available</p>
+            </div>
+            <div class="card kpi">
+              <p class="kpi-label">Hours to schedule</p>
+              <p class="kpi-value" id="kpi-scheduled">232.5</p>
+              <p class="kpi-note">after shrinkage</p>
+            </div>
+            <div class="card kpi">
+              <p class="kpi-label">Forecast daily SL</p>
+              <p class="kpi-value" id="kpi-sl">84.5%</p>
+              <p class="kpi-note" id="kpi-sl-note"></p>
+            </div>
+          </div>
+
+          <figure class="chart-card">
+            <figcaption>
+              <span class="chart-title">Agents required by 30-minute interval</span>
+              <span class="chart-subtitle">Hover or use arrow keys for calls, service level and scheduled heads</span>
+            </figcaption>
+            <div class="chart" id="agents-chart"></div>
+            <details class="chart-table" id="agents-table">
+              <summary>View as table</summary>
+              <div class="table-scroll">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Interval</th><th>Calls</th><th>Erlangs</th><th>Agents</th>
+                      <th>SL</th><th>ASA (sec)</th><th>Occupancy</th><th>Scheduled</th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+            </details>
+          </figure>
+          <p class="sr-only" id="calc-status" aria-live="polite"></p>
+        </div>
+      </div>
+
+      <section class="card method">
+        <h2>How it works</h2>
+        <ul>
+          <li>Workload in Erlangs is calls × AHT ÷ 1,800 seconds.</li>
+          <li>For each interval the calculator tries agent counts upward until the Erlang C service level,
+            <code>1 − C × e<sup>−(N−A)·T/AHT</sup></code>, meets the target and occupancy stays under the cap.</li>
+          <li>Scheduled heads divide required agents by (1 − shrinkage) to cover breaks, meetings, training and absence.</li>
+          <li>Erlang C assumes nobody hangs up, so it leans slightly towards overstaffing. That is usually the safer mistake.</li>
+        </ul>
+      </section>
+
+      <p class="fine-print">Harbor &amp; Pine Co. is a fictional company. All volumes and results are synthetic sample data.</p>
+    </main>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container">© 2026 Jastin Rada Tucay</div>
+  </footer>
+
+  <script src="erlang-calculator.js"></script>
+</body>
+</html>

@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Services | Jastin Tucay</title>
+  <meta name="description" content="Project help with operations, Google Workspace automation, real-time analysis and AI workflows. Samples you can open and try.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://pantinpo.github.io/services.html">
+  <meta property="og:title" content="Services | Jastin Tucay">
+  <meta property="og:description" content="Operations, Google Sheets automation, workforce management and AI workflows. Working samples you can open and try.">
+  <meta property="og:image" content="https://pantinpo.github.io/photo.jpg">
+  <meta name="twitter:card" content="summary">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 64px;
+      font-size: 14px;
+    }
+
+    .topbar a {
+      color: var(--text-secondary);
+      text-decoration: none;
+    }
+
+    .topbar a:hover { color: var(--text-primary); }
+
+    .intro { padding: 40px 0 8px; }
+
+    .intro .lead {
+      max-width: 620px;
+      margin: 16px 0 28px;
+      font-size: 18px;
+      color: var(--text-secondary);
+    }
+
+    .proof {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .proof li {
+      padding: 20px 22px;
+      border-radius: 22px;
+    }
+
+    .proof strong {
+      display: block;
+      font-size: 30px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+    }
+
+    .proof span {
+      display: block;
+      margin-top: 6px;
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    .page-section { padding-top: 88px; }
+
+    #samples { padding-top: 56px; }
+
+    .service-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .service {
+      padding: 28px;
+      border-radius: 22px;
+    }
+
+    .service p {
+      margin: 8px 0 0;
+      color: var(--text-secondary);
+    }
+
+    .sample {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+      gap: 32px;
+      padding: 32px;
+      margin-bottom: 14px;
+      border-radius: 22px;
+    }
+
+    .sample .sample-thumb {
+      aspect-ratio: 16 / 10;
+      margin-bottom: 20px;
+      border-radius: 14px;
+    }
+
+    .sample-kind {
+      margin: 0 0 8px;
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    .sample h3 {
+      font-size: clamp(22px, 2.6vw, 26px);
+      letter-spacing: -0.02em;
+    }
+
+    .sample dl { margin: 0; }
+
+    .sample dt {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--accent-text);
+    }
+
+    .sample dd {
+      margin: 4px 0 18px;
+      color: var(--text-secondary);
+    }
+
+    .sample dd:last-child { margin-bottom: 0; }
+
+    .sample .project-links { margin-top: 24px; }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      counter-reset: step;
+    }
+
+    .steps li {
+      padding: 28px;
+      border-radius: 22px;
+      counter-increment: step;
+    }
+
+    .steps li::after {
+      content: "0" counter(step);
+      position: absolute;
+      top: 20px;
+      right: 24px;
+      font-size: 40px;
+      font-weight: 700;
+      line-height: 1;
+      color: transparent;
+      -webkit-text-stroke: 1px var(--border);
+    }
+
+    .steps p {
+      margin: 8px 0 0;
+      color: var(--text-secondary);
+    }
+
+    .note {
+      margin: 20px 0 0;
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    .contact { padding-top: 88px; }
+
+    @media (max-width: 760px) {
+      .proof { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .service-grid,
+      .steps { grid-template-columns: 1fr; }
+      .sample {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        padding: 24px;
+      }
+      .contact-card { padding: 36px 24px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="topbar">
+      <a href="index.html">← Jastin Tucay</a>
+      <a href="https://calendar.app.google/HZJe4pwAjYoRgdL48" target="_blank" rel="noopener">Book a call</a>
+    </header>
+  </div>
+
+  <main>
+    <section class="container intro">
+      <p class="eyebrow">Project work · Remote</p>
+      <h1>Operations, automation and reporting help</h1>
+      <p class="lead">
+        I've spent 14 years in operations, first on the phones and then running the reporting behind
+        them. I can take on focused projects: clean up how your team works, automate the weekly
+        reporting, keep your queues staffed, or get your team using AI properly.
+      </p>
+      <div class="hero-actions">
+        <a href="#samples" class="button">See the samples</a>
+        <a href="https://calendar.app.google/HZJe4pwAjYoRgdL48" class="button button-secondary" target="_blank" rel="noopener">Book a 30-min call</a>
+      </div>
+    </section>
+
+    <section class="container page-section" id="samples">
+      <p class="eyebrow">Samples</p>
+      <h2>Open them, try them, copy them</h2>
+      <p class="section-intro">
+        Each one is built for Harbor & Pine Co., a made-up Australian homewares store, so you can see
+        how I'd approach your team without me sharing any employer's data.
+      </p>
+
+      <article class="sample card">
+        <div>
+          <div class="sample-thumb"><img src="images/sample-robot.jpg" alt="" loading="lazy"></div>
+          <p class="sample-kind">Google Sheets + Apps Script</p>
+          <h3>Weekly business review robot</h3>
+          <ul class="tags"><li>Apps Script</li><li>Google Sheets</li><li>Gmail</li></ul>
+        </div>
+        <div>
+          <dl>
+            <dt>Problem</dt>
+            <dd>Every Monday someone spent the morning pasting store orders, helpdesk tickets and ad spend into one sheet, fixing formats by hand, and writing the same summary email.</dd>
+            <dt>What I built</dt>
+            <dd>A script that cleans all three messy exports, removes duplicates, works out last week's numbers against the week before and the 4-week average, flags anything unusual, and emails a PDF summary at 8am every Monday.</dd>
+            <dt>Result</dt>
+            <dd>The review lands before 8am with a short list of what moved and what to check first, and every run is written to a log.</dd>
+          </dl>
+          <!-- TODO: add Loom walkthrough link -->
+          <div class="project-links">
+            <a href="samples/weekly-report-robot/weekly-business-review-robot.xlsx" class="button" download>Download the sheet</a>
+            <a href="samples/weekly-report-robot/example-email.html" class="button button-secondary" target="_blank" rel="noopener">See the email it sends</a>
+            <a href="samples/weekly-report-robot/weekly-business-review-robot-example-output.xlsx" class="button button-secondary" download>Example output</a>
+            <a href="https://github.com/pantinpo/pantinpo.github.io/blob/main/samples/weekly-report-robot/Code.gs" class="button button-secondary" target="_blank" rel="noopener">View the script</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="sample card">
+        <div>
+          <div class="sample-thumb"><img src="images/sample-wfm.jpg" alt="" loading="lazy"></div>
+          <p class="sample-kind">Web tool + Excel / Google Sheets</p>
+          <h3>Staffing calculator & WFM toolkit</h3>
+          <ul class="tags"><li>Erlang C</li><li>Intraday RTA</li><li>Adherence</li></ul>
+        </div>
+        <div>
+          <dl>
+            <dt>Problem</dt>
+            <dd>The care team was staffed on gut feel, so lunchtime queues blew out while the evenings sat idle.</dd>
+            <dt>What I built</dt>
+            <dd>An Erlang C calculator that turns forecast volume into agents needed for every half hour, plus an intraday sheet for real-time tracking against forecast and an adherence tracker for each agent.</dd>
+            <dt>Result</dt>
+            <dd>Change the service level target or the day's volume and the whole staffing plan updates in seconds. Anything off track during the day shows up red straight away, not in next week's report.</dd>
+          </dl>
+          <!-- TODO: add Loom walkthrough link -->
+          <div class="project-links">
+            <a href="erlang-calculator.html" class="button">Try the calculator</a>
+            <a href="samples/wfm-toolkit/wfm-toolkit.xlsx" class="button button-secondary" download>Download the toolkit</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="sample card">
+        <div>
+          <div class="sample-thumb"><img src="images/sample-ops.jpg" alt="" loading="lazy"></div>
+          <p class="sample-kind">Google Docs + Sheets</p>
+          <h3>Operations starter kit</h3>
+          <ul class="tags"><li>SOP</li><li>Onboarding</li><li>KPI scorecard</li></ul>
+        </div>
+        <div>
+          <dl>
+            <dt>Problem</dt>
+            <dd>Refund decisions depended on who picked up the ticket, new hires learned by asking around, and nobody could say which KPIs were off track.</dd>
+            <dt>What I built</dt>
+            <dd>A refund and returns SOP with clear approval limits and escalation steps, a 90-day onboarding checklist for remote team members, and a weekly scorecard that marks each KPI as on track, watch or off track.</dd>
+            <dt>Result</dt>
+            <dd>One way of doing things, written down, and one page that shows where to look each week.</dd>
+          </dl>
+          <!-- TODO: add Loom walkthrough link -->
+          <div class="project-links">
+            <a href="samples/ops-starter-kit/sop-refund-and-return-requests.docx" class="button" download>SOP</a>
+            <a href="samples/ops-starter-kit/new-team-member-onboarding-checklist.docx" class="button button-secondary" download>Onboarding checklist</a>
+            <a href="samples/ops-starter-kit/weekly-kpi-scorecard.xlsx" class="button button-secondary" download>KPI scorecard</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="sample card">
+        <div>
+          <div class="sample-thumb"><img src="images/sample-ai.jpg" alt="" loading="lazy"></div>
+          <p class="sample-kind">Web page + Google Doc</p>
+          <h3>AI prompt library for ops teams</h3>
+          <ul class="tags"><li>Prompt engineering</li><li>AI governance</li></ul>
+        </div>
+        <div>
+          <dl>
+            <dt>Problem</dt>
+            <dd>The team had AI tools but used them unevenly, retyped prompts from scratch, and weren't sure what data was safe to paste in.</dd>
+            <dt>What I built</dt>
+            <dd>A searchable library of 15 ready-to-use prompts for reporting, customer replies, data cleanup, team updates and SOP writing, each with an example and simple rules on what never goes into an AI tool.</dd>
+            <dt>Result</dt>
+            <dd>Anyone on the team can copy a proven prompt in one click, and the safety rules come with it.</dd>
+          </dl>
+          <!-- TODO: add Loom walkthrough link -->
+          <div class="project-links">
+            <a href="prompt-library.html" class="button">Open the library</a>
+            <a href="samples/ai-prompt-library/ai-prompt-library.docx" class="button button-secondary" download>Download as a doc</a>
+          </div>
+        </div>
+      </article>
+
+      <p class="note">Harbor & Pine Co. is made up, and every number in these samples is generated.</p>
+    </section>
+
+    <section class="container page-section">
+      <p class="eyebrow">From my full-time work</p>
+      <ul class="proof">
+        <li class="card"><strong>83% → 99%</strong><span>reporting data accuracy after I rebuilt the pipeline</span></li>
+        <li class="card"><strong>30%</strong><span>less time spent setting up routine reports</span></li>
+        <li class="card"><strong>1,000+</strong><span>FTEs covered by my capacity plans at Citi</span></li>
+        <li class="card"><strong>100+</strong><span>colleagues trained to use AI at work</span></li>
+      </ul>
+    </section>
+
+    <section class="container page-section" id="services">
+      <p class="eyebrow">What I can help with</p>
+      <h2>Four kinds of work</h2>
+      <div class="service-grid">
+        <div class="service card">
+          <h3>Operations support</h3>
+          <p>SOPs people actually follow, onboarding checklists, and a weekly KPI scorecard so you can see what's slipping before customers notice.</p>
+          <ul class="tags"><li>SOPs</li><li>KPI scorecards</li><li>Onboarding</li><li>Google Workspace</li></ul>
+        </div>
+        <div class="service card">
+          <h3>Google Sheets automation</h3>
+          <p>Apps Script that cleans your exports, builds the weekly report and emails it on schedule, so nobody has to copy and paste on a Monday.</p>
+          <ul class="tags"><li>Google Apps Script</li><li>Google Sheets</li><li>Gmail</li><li>Looker Studio</li></ul>
+        </div>
+        <div class="service card">
+          <h3>Real-time analysis & WFM</h3>
+          <p>Interval staffing with Erlang C, intraday monitoring against forecast, and adherence tracking for phone, chat and email teams.</p>
+          <ul class="tags"><li>Erlang C</li><li>Intraday monitoring</li><li>Capacity planning</li><li>Excel</li></ul>
+        </div>
+        <div class="service card">
+          <h3>AI workflows</h3>
+          <p>A shared prompt library, simple rules for what can and can't go into AI tools, and hands-on training so your team uses it every day.</p>
+          <ul class="tags"><li>Prompt libraries</li><li>AI governance</li><li>Team training</li><li>AI-assisted reporting</li></ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="container page-section">
+      <p class="eyebrow">How it works</p>
+      <h2>Small, clear projects</h2>
+      <ol class="steps">
+        <li class="card">
+          <h3>A 30-minute call</h3>
+          <p>You show me the process or the spreadsheet that's slowing you down. I tell you honestly if I can help.</p>
+        </li>
+        <li class="card">
+          <h3>A fixed scope</h3>
+          <p>You get a short written plan with what I'll build, by when, and for how much, before any work starts.</p>
+        </li>
+        <li class="card">
+          <h3>A clean handover</h3>
+          <p>Everything lives in your own Google account or files, with a how-to guide so your team can run it without me.</p>
+        </li>
+      </ol>
+    </section>
+
+    <section class="container contact">
+      <div class="contact-card card">
+        <p class="eyebrow">Contact</p>
+        <h2>Got something in mind?</h2>
+        <p class="section-intro">I work Manila hours that overlap with Australia, New Zealand and the US.</p>
+        <div class="hero-actions">
+          <a href="https://calendar.app.google/HZJe4pwAjYoRgdL48" class="button" target="_blank" rel="noopener">Book a 30-min call</a>
+          <a href="mailto:jastintucay@gmail.com" class="button button-secondary">jastintucay@gmail.com</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">© 2026 Jastin Rada Tucay</div>
+  </footer>
+
+  <script>
+    document.querySelectorAll(".card").forEach(card => {
+      card.addEventListener("pointermove", e => {
+        const r = card.getBoundingClientRect();
+        card.style.setProperty("--mx", `${e.clientX - r.left}px`);
+        card.style.setProperty("--my", `${e.clientY - r.top}px`);
+      });
+    });
+  </script>
+</body>
+</html>
